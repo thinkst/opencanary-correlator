@@ -1,0 +1,27 @@
+
+LOG_INVALID                                 = 0
+LOG_BASE_BOOT                               = 1000
+LOG_BASE_MSG                                = 1001
+LOG_BASE_DEBUG                              = 1002
+LOG_BASE_ERROR                              = 1003
+LOG_FTP_LOGIN_ATTEMPT                       = 2000
+LOG_HTTP_GET                                = 3000
+LOG_HTTP_POST_LOGIN_ATTEMPT                 = 3001
+LOG_SSH_NEW_CONNECTION                      = 4000
+LOG_SSH_REMOTE_VERSION_SENT                 = 4001
+LOG_SSH_LOGIN_ATTEMPT                       = 4002
+LOG_SMB_FILE_OPEN                           = 5000
+LOG_PORT_SYN                                = 5001
+LOG_PORT_SCAN_NET                           = 5002
+LOG_PORT_SCAN_HOST                          = 5003
+LOG_TELNET_LOGIN_ATTEMPT                    = 6001
+LOG_HTTPPROXY_LOGIN_ATTEMPT                 = 7001
+LOG_MYSQL_LOGIN_ATTEMPT                     = 8001
+LOG_MSSQL_LOGIN_SQLAUTH                     = 9001
+LOG_MSSQL_LOGIN_WINAUTH                     = 9002
+LOG_TFTP                                    = 10001
+LOG_NTP_MONLIST                             = 11001
+LOG_VNC                                     = 12001
+LOG_SNMP_CMD                                = 13001
+LOG_RDP                                     = 14001
+LOG_SIP_REQUEST                             = 15001
