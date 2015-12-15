@@ -1,5 +1,5 @@
 import redis
-redis = redis.StrictRedis(host='localhost', port=6379, db='0')
+redis = redis.StrictRedis(host='127.0.0.1', port=6379, db='0')
 redis.DEFAULT_EXPIRY = 120
 
 KEY_LOGS                    = 'logs'
