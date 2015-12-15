@@ -1,6 +1,6 @@
 from twilio.rest import TwilioRestClient
 from opencanary_correlator.common.logs import logger
-from opencanary_correlator.common.emailer import mandrill_send
+from opencanary_correlator.common.emailer import mandrill_send, send_email
 import opencanary_correlator.common.config as c
 
 class SMS:
@@ -22,19 +22,22 @@ def notify(incident):
     if c.config.getVal('console.email_notification_enable', False):
         logger.debug('Email notifications enabled')
         addresses = c.config.getVal('console.email_notification_address', default=[])
-        for address in addresses:
-            logger.debug('Email sent to %s' % address)
-            mandrill_send(to=address,
-               subject=incident.format_title(),
-               message=incident.format_report())
-#        server  = c.config.getVal('console.email_notification_server', default='')
-#        if len(addresses) > 0 and server:
-#            for address in addresses:
-#                send_email(to=address,
-#                       subject=incident.format_title(),
-#                       message=incident.format_report(),
-#                       server=server)
-
+        if c.config.getVal('console.mandrill_key', default=''):
+            for address in addresses:
+                logger.debug('Email sent to %s' % address)
+                mandrill_send(to=address,
+                              subject=incident.format_title(),
+                              message=incident.format_report())
+        else:
+            server  = c.config.getVal('console.email_host', default='')
+            port = int(c.config.getVal('console.email_port', default=25))
+            if len(addresses) > 0 and server:
+                for address in addresses:
+                    send_email(to=address,
+                               subject=incident.format_title(),
+                               message=incident.format_report(),
+                               server=server,
+                               port=port)
 
     if c.config.getVal('console.sms_notification_enable', default=False):
         logger.debug('SMS notifications enabled')
