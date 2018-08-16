@@ -22,7 +22,7 @@ def notify(incident):
     if c.config.getVal('console.email_notification_enable', False):
         logger.debug('Email notifications enabled')
         addresses = c.config.getVal('console.email_notification_address', default=[])
-        if c.config.getVal('console.mandrill_key', default=''):
+        if c.config.getVal('console.mandrill_key', False):
             for address in addresses:
                 logger.debug('Email sent to %s' % address)
                 mandrill_send(to=address,
