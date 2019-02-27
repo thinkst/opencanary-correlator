@@ -2,6 +2,7 @@ from twilio.rest import TwilioRestClient
 from opencanary_correlator.common.logs import logger
 from opencanary_correlator.common.emailer import mandrill_send, send_email
 import opencanary_correlator.common.config as c
+import requests
 
 class SMS:
     def send(self, destination, message):
@@ -46,3 +47,13 @@ def notify(incident):
         for to in sms_numbers:
             logger.debug('SMS sent to %s' % to)
             sms.send(to, incident.format_report_short())
+
+    if c.config.getVal('console.slack_notification_enable', default=False):
+        logger.debug('Slack notifications enabled')
+        webhooks = c.config.getVal('console.slack_notification_webhook', default=[])
+        for to in webhooks:
+            response = requests.post(
+                to, json={"text": incident.format_report_short()}
+                )
+            if response.status_code != 200:
+                logger.error("Error %s sending Slack message, the response was:\n%s" % (response.status_code, response.text))
