@@ -12,17 +12,25 @@ class SMS:
 
         client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
-
         client.messages.create(
             to=destination,
             from_=from_,
             body=message
         )
 
+#
+# February 6, 2021 Modifications to the notify function:
+#
+# - Rename console.email_notification_address to console.email_notification_addresses
+#   to reflect the out-of-the-box functionality for handling multiple e-mail addresses
+# - Add console.email_from_address
+# - Add console.email_credentials parameters to facilitate sending e-mails directly
+#   using a secure SMTP server, such as Gmail
+#
 def notify(incident):
     if c.config.getVal('console.email_notification_enable', False):
         logger.debug('Email notifications enabled')
-        addresses = c.config.getVal('console.email_notification_address', default=[])
+        addresses = c.config.getVal('console.email_notification_addresses', default=[])
         if c.config.getVal('console.mandrill_key', False):
             for address in addresses:
                 logger.debug('Email sent to %s' % address)
@@ -32,13 +40,20 @@ def notify(incident):
         else:
             server  = c.config.getVal('console.email_host', default='')
             port = int(c.config.getVal('console.email_port', default=25))
+            from_ = c.config.getVal('console.email_from_address', default='')
+            credentials = c.config.getVal('console.email_credentials', default=[])
+            username = credentials[0]
+            password = credentials[1]
             if len(addresses) > 0 and server:
                 for address in addresses:
-                    send_email(to=address,
+                    send_email(from_=from_,
+                               to=address,
                                subject=incident.format_title(),
                                message=incident.format_report(),
                                server=server,
-                               port=port)
+                               port=port,
+                               username=username,
+                               password=password)
 
     if c.config.getVal('console.sms_notification_enable', default=False):
         logger.debug('SMS notifications enabled')
