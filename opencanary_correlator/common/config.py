@@ -65,7 +65,7 @@ class Config:
                 json.dump(self.__config, f)
 
         except Exception, e:
-            print "[-] Failed to save config file %s" % e
+            print("[-] Failed to save config file %s" % e)
             raise ConfigException("config", e)
 
     def __repr__(self):
