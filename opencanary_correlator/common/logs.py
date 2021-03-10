@@ -25,6 +25,10 @@ logger = None
 # Console and correlator use different logger names. Common modules
 # should still log to the logger for the process under which they're running.
 # Impact of this is we don't support multiple loggers per process
+
+# In Python 3.x this will fail as dict_keys() is no longer returns a list, but an object.
+# The following will provide an iterable list (if that is still the right thing to do)
+# existing_logger_names = list(logging.getLogger().manager.loggerDict.keys())
 existing_logger_names = logging.getLogger().manager.loggerDict.keys()
 if len(existing_logger_names) > 0:
     lgr = existing_logger_names[0]
