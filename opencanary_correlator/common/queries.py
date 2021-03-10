@@ -142,6 +142,6 @@ def set_console_setting(setting, value):
     return redis.set(key, value)
 
 if __name__ == "__main__":
-    print 'All: %r'  % get_all_devices()
-    print 'All Incidents: %r' % get_all_incidents()
-    print 'All Unacknowledged Incidents: %r' % get_unacknowledged_incidents()
+    print('All: %r'  % get_all_devices())
+    print('All Incidents: %r' % get_all_incidents())
+    print('All Unacknowledged Incidents: %r' % get_unacknowledged_incidents())
