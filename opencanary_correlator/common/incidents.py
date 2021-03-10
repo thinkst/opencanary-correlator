@@ -392,7 +392,7 @@ class IncidentFactory:
 
     @classmethod
     def create_incident(cls, type_, data=None):
-        print '{0}: {1}'.format(type_, data)
+        print('{0}: {1}'.format(type_, data))
         logger.debug('Creating incident type: {0}'.format(type_))
         if type_ == 'ftp.login_attempt':
             IncidentFTPLogin(data=data, write_object=True)
