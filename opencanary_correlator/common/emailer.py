@@ -40,7 +40,8 @@ def mandrill_send(to=None, subject=None, message=None, reply_to=None):
         if reply_to:
             message["headers"] = { "Reply-To": reply_to }
 
-        # With Python 3.x this line will fail because async is a reserved word
+        # With Python 3.7 this line will fail because async is a reserved word
+        # The new line should be: result = mandrill_client.messages.send(message=message, asy=False, ip_pool='Main Pool')
         result = mandrill_client.messages.send(message=message, async=False, ip_pool='Main Pool')
 
     except mandrill.Error, e:
